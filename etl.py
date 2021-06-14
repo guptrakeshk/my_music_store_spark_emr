@@ -19,6 +19,8 @@ os.environ['AWS_SECRET_ACCESS_KEY']=config['spark-admin']['aws_secret_access_key
 def create_spark_session():
     """ This function creates or get a Spark session for given application. 
         Specify the jar packages for having specific version while creating Sparksession.
+        :return: A SparkSession instance
+        :rtype: SparkSession
     """
     spark = SparkSession \
         .builder \
@@ -30,9 +32,13 @@ def create_spark_session():
 
 def get_song_df(spark, input_data):
     """ A function that access S3 bucket to read songs data.
-        parameters:
-            spark      : A Spark session
-            input_data : S3 location for songs data log
+        :param spark: A Spark session 
+        :type spark: SparkSession
+        :param input_data : S3 location for songs data log
+        :type input_data : str
+        
+        :return: A Spark dataframe 
+        :rtype: DataFrame
     """
     song_data = os.path.join(input_data, "song-data/*/*/*/*.json")
 
@@ -68,10 +74,12 @@ def process_song_data(spark, input_data, output_data):
         - It select song specific columns from temp table in declartive SQL
         - Function then write songs record data into a parquet file format back to AWS S3
         - It repeats the process for artitst data
-        parameters:
-            spark      : spark session
-            input_data : S3 location for songs data
-            output_data: S3 location for writing processed songs data in Parquet files
+        :param spark: spark session 
+        :type spark: SparkSession
+        :param input_data : S3 location for songs data
+        :type input_data : str
+        :param output_data: S3 location for writing processed songs data in Parquet files
+        :type output_data : str
     """
     
     # Get songs data files and create a data frame
@@ -121,10 +129,13 @@ def process_song_data(spark, input_data, output_data):
 def process_log_data(spark, input_data, output_data):
     """ A function that processes events log which is stored in AWS S3.
         Function access events log from S3 using AWS credentials.
-        parameters:
-            spark      : spark session
-            input_data : S3 location for event logs data
-            output_data: S3 location for writing processed data in Parquet files
+        
+        :param spark: spark session 
+        :type spark: SparkSession
+        :param input_data : S3 location for songs data
+        :type input_data : str
+        :param output_data: S3 location for writing processed songs data in Parquet files
+        :type output_data : str
     """
     # get filepath to log data file
     log_data = os.path.join(input_data, "log_data/2018/11/*.json")

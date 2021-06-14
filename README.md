@@ -3,36 +3,36 @@
 
 ### A hands-on, Project-based instruction for data engineering ETL using Saprk and AWS EMR
 
-This is a collection of resources for data engineering ETL for a fictious a music company.
+This is a collection of resources for data engineering ETL for a fictious music company.
 
 Email: gupt.rakeshk@gmail.com
 
-This project walks through end-to-end data engineering steps that are needed in a typical project.
+This project walks through end-to-end data engineering pipeline steps that are needed in a typical project.
 Access event log data from AWS S3 to dynamically read data in data frame, create a temp database and ETL pipeline using Spark for a music streaming app. 
-Spark application reads songs and events log data from AWS S3 and load in memory for faster processing. For simpler declarative SQL style queries Spark allows to create a temp table from data frames using Python SQL APIs. After processing and transforming songs and events log data application writes processed data into Apache Parquet file format and store into AWS S3 desired location.
+Spark application reads songs and events log data from AWS S3 and load in memory for faster processing. For simpler declarative SQL style queries Spark allows to create a temp table from data frame using Python SQL APIs. After processing and transforming songs and events log data, application writes processed data into Apache Parquet file format and store into AWS S3 desired location. 
+Here AWS S3 is envisioned as a data lake that stores data from disparate sources after processing and storing into highly optimized, columnar Parquet files format.
 
 #### Pre-Requisites
 - Ensure AWS IAM user is created with read access to S3 as well as necessary access for AWS EMR.
-- AWS EMR cluster is up, configured and running 
+- AWS EMR cluster is up, configured and running .
 - AWS IAM user has right security policy set-up to access and perform ETL on AWS EMR.
 - Ensure IAM role ARN is tested for right permission to access S3 for reading data and subsequently writing processed data in AWS S3 data lake.
 - For security of confidential information, credentials details must be stored in safe configuration file.
 - For better network efficiency, ensure EMR cluster is created in the same region where S3 bucket holding events log and songs meta data is located .
-- Also ensure the desired AWS S3 location of the data lake is in the same region where EMR cluster is running.
+- Also ensure the desired AWS S3 data lake location is in the same region where EMR cluster is running.
 
 ### Steps involved are :
 - Copy data that are stored in AWS S3. 
 - Apply processing, transformation and subsequent writing to Apache file format using Spark followed with loading processed data into desired AWS S3 data lake.
-- Once data is cleansed, transformed and loaded into AWS s3 data lake, it is ready to asnwer queries for analytics.
+- Once data is cleansed, transformed and loaded into AWS s3 data lake, it is ready to asnwer queries for analytics & data science discovery.
 
 
 #### Building ETL Pipeline steps:
 
-- Saprk application accesses S3 bucket to read events log and song data from the EMR cluster.
-- Iterate through each event file in event_log data to extract events data
-- Extract users, time and songsplay activity data from events after processing
-- Create users, time, songsplay data files in Apache parquet format and write back in AWS S3 desired location
-- Generate Apache Cassandra CREATE and INSERT statements to load processed records into relevant tables in your data model
+- Saprk application accesses S3 bucket to read events log and songs data from the EMR cluster.
+- Spark automatically iterates through each event file from the event_log location to extract events data into a dataframe.
+- Extract users, time and songsplay activity data from events dataframe after processing and transformation.
+- Write users, time, songsplay data files in the Apache parquet format and store in the AWS S3 data lake.
 - Once data is cleansed, transformed and loaded in AWS S3 data lake, it is ready to asnwer specific queries for analytics.
 
 
@@ -46,7 +46,6 @@ Here are helpful steps in executing Spark program.
 - execute `/usr/bin/spark-submit --master=yarn etl.py`
 
 Note: Make sure spark prgram etl.py is present on the EMR master cluster.
-
 
 
 
