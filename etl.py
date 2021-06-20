@@ -218,7 +218,7 @@ def process_log_data(spark, input_data, output_data):
     # write songplays table to parquet files partitioned by year and month
     try :
         songplays_output_location = os.path.join(output_data, "songplays_data/")
-        time_table.write.partitionBy("year", "month") \
+        songplays_table.write.partitionBy("year", "month") \
                         .mode("overwrite") \
                         .parquet(songplays_output_location)
     except Exception as e:
